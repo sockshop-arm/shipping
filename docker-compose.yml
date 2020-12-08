@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  shipping:
+    image: codelab/shipping:latest
+    hostname: shipping
+    restart: always
+    cap_drop:
+      - all
+    cap_add:
+      - NET_BIND_SERVICE
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid
+    environment:
+      - reschedule=on-node-failure
+      - ZIPKIN_HOST=zipkin
+      - ZIPKIN_ENABLED=true
+    ports:
+      - "8080:80"
